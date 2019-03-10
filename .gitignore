@@ -1,0 +1,10 @@
+
+*.bin
+
+*.lock
+
+\.idea/workspace\.xml
+
+gradle/wrapper/gradle-wrapper\.properties
+
+*.class
