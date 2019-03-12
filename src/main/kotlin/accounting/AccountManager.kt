@@ -18,7 +18,7 @@ object AccountManager {
         // Getting new keypair as ID
         this.keyPair = KeyPair.random()
         // Registering the user
-        val registerURL = URL(Config.SERVER_URL + "?addr=" + this.keyPair?.accountId)
+        val registerURL = URL(Config.BOT_URL + "?addr=" + this.keyPair?.accountId)
         val connection = registerURL.openConnection() as HttpURLConnection
         connection.requestMethod = "GET"
         connection.connect()
