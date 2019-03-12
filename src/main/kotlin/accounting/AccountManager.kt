@@ -1,6 +1,8 @@
 package accounting
 
 import org.stellar.sdk.KeyPair
+import org.stellar.sdk.Server
+import org.stellar.sdk.responses.AccountResponse
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -30,6 +32,25 @@ object AccountManager {
         }
 
         return true
+    }
+
+    /**
+     * Gets the balances of the account
+     */
+    fun getBalances(): Array<Balance> {
+        // getting account info from servers
+        val server = Server(Config.SERVER_URL)
+        val account = server.accounts().account(this.keyPair)
+
+        var result = arrayOf<Balance>()
+        // filling the balance wrapper
+        if (account.balances != null) {
+            for (rawBalance in account.balances) {
+                result += Balance(rawBalance.assetType, rawBalance.assetCode, rawBalance.balance)
+            }
+        }
+        // returns empty list if there is no balance for this account
+        return result
     }
 }
 
