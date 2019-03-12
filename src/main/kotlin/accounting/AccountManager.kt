@@ -32,3 +32,8 @@ object AccountManager {
         return true
     }
 }
+
+/**
+ * Data class for account balance model
+ */
+data class Balance(var assetType: String, val assetCode: String?, val balance: String)
