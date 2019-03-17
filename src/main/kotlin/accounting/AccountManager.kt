@@ -56,6 +56,13 @@ object AccountManager {
         // returns empty list if there is no balance for this account
         return result
     }
+
+    /**
+     * Checks if user is logged in by checking the keysPair
+     */
+    fun isLoggedIn(): Boolean {
+        return keyPair != null
+    }
 }
 
 /**
