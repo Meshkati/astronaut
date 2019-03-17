@@ -2,6 +2,8 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 .idea/
+gradle/
+lib/
 
 # Generated files
 .idea/**/contentModel.xml
@@ -61,3 +63,5 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 *.db
+
+\.gradle/
