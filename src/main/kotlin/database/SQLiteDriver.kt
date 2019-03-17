@@ -28,4 +28,26 @@ object SQLiteDriver {
 
         return connection
     }
+    /**
+     * This function is to create keyValue table on the db
+     * FIXME: I know this db architect is wrong :D
+     */
+    private fun createKeyValueStorage() {
+        val sql = "CREATE TABLE IF NOT EXISTS keyValue (\n" +
+                " id integer PRIMARY KEY,\n" +
+                " key text NOT NULL,\n" +
+                " value text NOT NULL\n" +
+                ");"
+        try {
+            val connection = DriverManager.getConnection(Config.SQLITE_PATH)
+            val statement = connection?.createStatement()
+            println(sql)
+            statement?.execute(sql)
+
+            connection.close()
+        } catch (e: SQLException) {
+            println(e.message)
+        }
+    }
+
 }
