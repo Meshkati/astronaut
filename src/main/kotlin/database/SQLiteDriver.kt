@@ -53,6 +53,26 @@ object SQLiteDriver {
 
         return insertedID
     }
+
+    /**
+     * Checks if a table is created or not
+     * @param tableName
+     */
+    fun isTableExists(tableName: String): Boolean {
+        try {
+            val connection = connect()
+            val metaData = connection?.metaData
+            val result = metaData?.getTables(null, null, tableName, null)
+            result?.last()
+
+            return result?.row!! > 0
+        } catch (e: SQLException) {
+            println(e.message)
+        }
+
+        return false
+    }
+
     /**
      * This function is to create keyValue table on the db
      * FIXME: I know this db architect is wrong :D
