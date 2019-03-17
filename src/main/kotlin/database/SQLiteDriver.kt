@@ -86,7 +86,6 @@ object SQLiteDriver {
         try {
             val connection = DriverManager.getConnection(Config.SQLITE_PATH)
             val statement = connection?.createStatement()
-            println(sql)
             statement?.execute(sql)
 
             connection.close()
