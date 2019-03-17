@@ -31,16 +31,16 @@ object SQLiteDriver {
 
     /**
      * Inserts a key-value like data in database
-     * @param table
+     * @param tableName
      * @param key
      * @param value
      *
      * TODO: Value type has to be changed to byte
      */
-    fun insert(table: String, key: String, value: String): Int {
+    fun insert(tableName: String, key: String, value: String): Int {
         var insertedID = -1
-        val sql = "INSERT INTO $table (key,value) VALUES(?,?);"
-        println(sql)
+        val sql = "INSERT INTO $tableName (key,value) VALUES(?,?);"
+        
         try {
             val connection = connect()
             val statement = connection?.prepareStatement(sql)
