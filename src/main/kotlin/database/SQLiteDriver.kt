@@ -55,6 +55,29 @@ object SQLiteDriver {
     }
 
     /**
+     * Get's a value by it's key
+     * @param tableName
+     * @param key
+     */
+    fun getValue(tableName: String, key: String): String {
+        var value = ""
+        val sql  = "SELECT key, value FROM $tableName WHERE key = ?"
+        try {
+            val connection = connect()
+            val statement = connection?.prepareStatement(sql)
+            statement?.setString(1, key)
+            val results = statement?.executeQuery()
+
+            results?.next()
+            value = results?.getString("value")!!
+        } catch (e: SQLException) {
+            println(e.message)
+        }
+
+        return value
+    }
+
+    /**
      * Checks if a table is created or not
      * @param tableName
      */
