@@ -38,6 +38,24 @@ object AccountManager {
     }
 
     /**
+     * Get's keys from database and fills the keyPair
+     * @return false if login failed and true when keyPair is filled up
+     */
+    fun login(): Boolean {
+        val secretSeed = Repository.getSecretSeed()
+        if (secretSeed == "") {
+            return false
+        }
+
+        keyPair = KeyPair.fromSecretSeed(secretSeed)
+        if (keyPair == null) {
+            return false
+        }
+
+        return true
+    }
+
+    /**
      * Gets the balances of the account
      * @return The currency balances, native is the lumen by default
      */
