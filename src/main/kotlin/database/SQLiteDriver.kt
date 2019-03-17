@@ -50,4 +50,10 @@ object SQLiteDriver {
         }
     }
 
+    /**
+     * Creates all of the tables needed in application
+     */
+    private fun createTables() {
+        createKeyValueStorage()
+    }
 }
