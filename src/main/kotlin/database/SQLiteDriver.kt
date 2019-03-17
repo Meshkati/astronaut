@@ -28,6 +28,31 @@ object SQLiteDriver {
 
         return connection
     }
+
+    /**
+     * Inserts a key-value like data in database
+     * @param table
+     * @param key
+     * @param value
+     *
+     * TODO: Value type has to be changed to byte
+     */
+    fun insert(table: String, key: String, value: String): Int {
+        var insertedID = -1
+        val sql = "INSERT INTO $table (key,value) VALUES(?,?);"
+        println(sql)
+        try {
+            val connection = connect()
+            val statement = connection?.prepareStatement(sql)
+            statement?.setString(1, key)
+            statement?.setString(2, value)
+            insertedID = statement?.executeUpdate()!!
+        } catch (e: SQLException) {
+            println(e.message)
+        }
+
+        return insertedID
+    }
     /**
      * This function is to create keyValue table on the db
      * FIXME: I know this db architect is wrong :D
