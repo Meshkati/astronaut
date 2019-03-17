@@ -1,5 +1,6 @@
 package accounting
 
+import database.Repository
 import org.stellar.sdk.KeyPair
 import org.stellar.sdk.Server
 import java.net.HttpURLConnection
@@ -23,11 +24,14 @@ object AccountManager {
         val connection = registerURL.openConnection() as HttpURLConnection
         connection.requestMethod = "GET"
         connection.connect()
-        // todo: persist the state of logging in
         if (connection.responseCode != 200) {
             // for resetting the ID
             this.keyPair = null
             return false
+        }
+        // Persisting the user keyPair
+        if (keyPair != null) {
+            Repository.setKeyPair(keyPair!!)
         }
 
         return true
@@ -35,6 +39,7 @@ object AccountManager {
 
     /**
      * Gets the balances of the account
+     * @return The currency balances, native is the lumen by default
      */
     fun getBalances(): Array<Balance> {
         // getting account info from servers
