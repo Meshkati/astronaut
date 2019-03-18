@@ -8,4 +8,15 @@ package transaction
  */
 object PaymentHandler {
     
+    /**
+     * Prepares the network for the server, either on the test network or other networks
+     */
+    private fun prepareNetwork() {
+        // TODO: Add kuknus network
+        if (Config.MODE == "TEST") {
+            Network.useTestNetwork()
+        } else {
+            Network.usePublicNetwork()
+        }
+    }
 }
