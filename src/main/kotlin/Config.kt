@@ -4,6 +4,7 @@ class Config {
         const val SERVER_URL = "https://horizon-testnet.stellar.org"
         const val SQLITE_PATH = "jdbc:sqlite:astronaut.db"
         const val MODE = "TEST" // `PROD` for production
+        const val TRANSACTION_TIMEOUT = 10
     }
 
     /**

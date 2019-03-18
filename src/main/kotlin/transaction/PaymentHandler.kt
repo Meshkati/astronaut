@@ -38,13 +38,18 @@ object PaymentHandler {
         val transaction = Transaction.Builder(sourceAccount)
                 .addOperation(PaymentOperation.Builder(destination, AssetTypeNative(), amount).build())
                 .addMemo(Memo.text(memo))
+                .setTimeout(Config.TRANSACTION_TIMEOUT.toLong())
                 .build()
         transaction.sign(source)
         // Sending the transaction to the server
         try {
             val submittionResponse = server.submitTransaction(transaction)
+            // Checking the response state
+            if (!submittionResponse.isSuccess) {
+                println("Payment Failed after submission")
+            }
             println("Payment Succeed!")
-            println(submittionResponse)
+
             return true
         } catch (e: Exception) {
             println("PaymentHandler::sendPayment::Exception occurred\n" + e.message)
