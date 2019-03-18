@@ -3,6 +3,7 @@ package accounting
 import database.Repository
 import org.stellar.sdk.KeyPair
 import org.stellar.sdk.Server
+import org.stellar.sdk.responses.AccountResponse
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -80,6 +81,18 @@ object AccountManager {
      */
     fun isLoggedIn(): Boolean {
         return keyPair != null
+    }
+
+    /**
+     * Loads the up-to-date information of the account from server
+     */
+    fun loadAccountFromServer(): AccountResponse? {
+        if (!isLoggedIn()) {
+            return null
+        }
+        val server = Server(Config.SERVER_URL)
+
+        return server.accounts().account(keyPair)
     }
 }
 
