@@ -35,6 +35,7 @@ object PaymentHandler {
         // Gets up-to-date information of the account
         val sourceAccount = AccountManager.loadAccountFromServer()
         // Building the transaction
+        // TODO: Persist transaction state for retrieving transaction state after app failure
         val transaction = Transaction.Builder(sourceAccount)
                 .addOperation(PaymentOperation.Builder(destination, AssetTypeNative(), amount).build())
                 .addMemo(Memo.text(memo))
