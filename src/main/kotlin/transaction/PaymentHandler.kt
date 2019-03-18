@@ -1,5 +1,9 @@
-
 package transaction
+
+import accounting.AccountManager
+import org.stellar.sdk.*
+import org.stellar.sdk.xdr.AssetType
+import java.lang.Exception
 
 /**
  * This class provides all the stuffs about handling payments,
@@ -7,6 +11,48 @@ package transaction
  * and other things.
  */
 object PaymentHandler {
+    /**
+     * Sends a payment to a user in the network
+     * @param secretSeed is the source secret_seed
+     * @param accountID is the destination account_id
+     * @param amount is the amount of the currency
+     * @param memo is the memo message for the transaction, its optional
+     *
+     * @return returns true of payment succeed, false if fails
+     */
+    fun sendPayment(secretSeed: String, accountID: String, amount: String, memo: String = ""): Boolean {
+        // Preparing the server
+        prepareNetwork()
+        val server = Server(Config.SERVER_URL)
+        // Generating source and destination keys
+        val source = KeyPair.fromSecretSeed(secretSeed)
+        val destination = KeyPair.fromAccountId(accountID)
+        // Check if the destination account exists, to prevent the extra fee
+        if (!checkAccountExists(accountID)) {
+            println("PaymentHandler::sendPayment::Destination account is not exists")
+            return false
+        }
+        // Gets up-to-date information of the account
+        val sourceAccount = AccountManager.loadAccountFromServer()
+        // Building the transaction
+        val transaction = Transaction.Builder(sourceAccount)
+                .addOperation(PaymentOperation.Builder(destination, AssetTypeNative(), amount).build())
+                .addMemo(Memo.text(memo))
+                .build()
+        transaction.sign(source)
+        // Sending the transaction to the server
+        try {
+            val submittionResponse = server.submitTransaction(transaction)
+            println("Payment Succeed!")
+            println(submittionResponse)
+            return true
+        } catch (e: Exception) {
+            println("PaymentHandler::sendPayment::Exception occurred\n" + e.message)
+        }
+
+        return false
+    }
+
     /**
      * Checks if the account with provided account_id exists in the network
      * We have to do it to prevent extra fees on transactions
