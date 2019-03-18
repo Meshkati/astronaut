@@ -1,4 +1,6 @@
 import accounting.AccountManager
+import database.Repository
+import transaction.PaymentHandler
 
 fun main(args: Array<String>) {
     if (!AccountManager.isLoggedIn()) {
@@ -9,10 +11,18 @@ fun main(args: Array<String>) {
         }
     }
 
-    if (AccountManager.isLoggedIn()) {
-        for (balance in AccountManager.getBalances()) {
-            println(balance)
-        }
+    if (!AccountManager.isLoggedIn()) {
+        return
     }
+
+    for (balance in AccountManager.getBalances()) {
+        println(balance)
+    }
+
+    PaymentHandler.sendPayment(Repository.getSecretSeed(),
+            "GDH26FG64TAHWPBGJGJFAQIVWKTFNBAZUS2F4HQC2LTBSGOHQKCHLGKR",
+            "24",
+            "First transaction"
+            )
 
 }
