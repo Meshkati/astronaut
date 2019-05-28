@@ -1,9 +1,9 @@
-package transaction
+package ir.nasim.astronaut.transaction
 
-import accounting.AccountManager
+import ir.nasim.astronaut.accounting.AccountManager
 import org.stellar.sdk.*
-import org.stellar.sdk.xdr.AssetType
 import java.lang.Exception
+import ir.nasim.astronaut.Config
 
 /**
  * This class provides all the stuffs about handling payments,
@@ -44,9 +44,9 @@ object PaymentHandler {
         transaction.sign(source)
         // Sending the transaction to the server
         try {
-            val submittionResponse = server.submitTransaction(transaction)
+            val submissionResponse = server.submitTransaction(transaction)
             // Checking the response state
-            if (!submittionResponse.isSuccess) {
+            if (!submissionResponse.isSuccess) {
                 println("Payment Failed after submission")
             }
             println("Payment Succeed!")

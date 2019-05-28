@@ -1,3 +1,5 @@
+package ir.nasim.astronaut
+
 class Config {
     companion object {
         const val BOT_URL = "https://friendbot.stellar.org/"

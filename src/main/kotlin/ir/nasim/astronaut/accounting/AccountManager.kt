@@ -1,6 +1,7 @@
-package accounting
+package ir.nasim.astronaut.accounting
 
-import database.Repository
+import ir.nasim.astronaut.database.Repository
+import ir.nasim.astronaut.Config
 import org.stellar.sdk.KeyPair
 import org.stellar.sdk.Server
 import org.stellar.sdk.responses.AccountResponse
@@ -19,15 +20,15 @@ object AccountManager {
      */
     fun register(): Boolean {
         // Getting new keypair as ID
-        this.keyPair = KeyPair.random()
+        keyPair = KeyPair.random()
         // Registering the user
-        val registerURL = URL(Config.BOT_URL + "?addr=" + this.keyPair?.accountId)
+        val registerURL = URL(Config.BOT_URL + "?addr=" + keyPair?.accountId)
         val connection = registerURL.openConnection() as HttpURLConnection
         connection.requestMethod = "GET"
         connection.connect()
         if (connection.responseCode != 200) {
             // for resetting the ID
-            this.keyPair = null
+            keyPair = null
             return false
         }
         // Persisting the user keyPair
@@ -63,7 +64,7 @@ object AccountManager {
     fun getBalances(): Array<Balance> {
         // getting account info from servers
         val server = Server(Config.SERVER_URL)
-        val account = server.accounts().account(this.keyPair)
+        val account = server.accounts().account(keyPair)
 
         var result = arrayOf<Balance>()
         // filling the balance wrapper
@@ -93,6 +94,13 @@ object AccountManager {
         val server = Server(Config.SERVER_URL)
 
         return server.accounts().account(keyPair)
+    }
+
+    /**
+     * Simply logout!
+     */
+    fun logOut() {
+        // TODO: :D
     }
 }
 

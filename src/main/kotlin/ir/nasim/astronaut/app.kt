@@ -1,6 +1,8 @@
-import accounting.AccountManager
-import database.Repository
-import transaction.PaymentHandler
+package ir.nasim.astronaut
+
+import ir.nasim.astronaut.accounting.AccountManager
+import ir.nasim.astronaut.database.Repository
+import ir.nasim.astronaut.transaction.PaymentHandler
 
 fun main(args: Array<String>) {
     if (!AccountManager.isLoggedIn()) {

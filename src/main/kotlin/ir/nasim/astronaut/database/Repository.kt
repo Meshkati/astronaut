@@ -1,4 +1,4 @@
-package database
+package ir.nasim.astronaut.database
 
 import org.stellar.sdk.KeyPair
 

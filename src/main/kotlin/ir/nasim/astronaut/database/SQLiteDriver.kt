@@ -1,8 +1,9 @@
-package database
+package ir.nasim.astronaut.database
 
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
+import ir.nasim.astronaut.Config
 
 /**
  * This class provides all the stuffs about handling sqlite
